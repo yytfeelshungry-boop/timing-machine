@@ -28,6 +28,13 @@ const floatPlayPauseBtn = document.getElementById('float-play-pause');
 const floatPlayIcon = floatPlayPauseBtn.querySelector('.play-icon');
 const floatPauseIcon = floatPlayPauseBtn.querySelector('.pause-icon');
 const toggleFloatBtn = document.getElementById('toggle-float');
+const pipBtn = document.getElementById('pip-btn');
+
+// 画中画元素
+const pipCanvas = document.getElementById('pip-canvas');
+const pipVideo = document.getElementById('pip-video');
+const ctx = pipCanvas.getContext('2d');
+let pipAnimationId = null;
 
 // 初始化
 function init() {
@@ -54,6 +61,11 @@ function bindEvents() {
     // 浮窗按钮
     floatPlayPauseBtn.addEventListener('click', togglePlayPause);
     toggleFloatBtn.addEventListener('click', toggleFloatingWindow);
+    pipBtn.addEventListener('click', togglePiP);
+    
+    // 画中画事件
+    pipVideo.addEventListener('enterpictureinpicture', handleEnterPiP);
+    pipVideo.addEventListener('leavepictureinpicture', handleLeavePiP);
 }
 
 // 更新活动
@@ -163,6 +175,118 @@ function showRecordsPage() {
 function showTimerPage() {
     recordsPage.classList.remove('active');
     timerPage.classList.add('active');
+}
+
+// 渲染画中画内容
+function renderPiP() {
+    // 清空画布
+    ctx.clearRect(0, 0, pipCanvas.width, pipCanvas.height);
+    
+    // 绘制背景
+    const gradient = ctx.createLinearGradient(0, 0, 0, pipCanvas.height);
+    gradient.addColorStop(0, 'rgba(26, 26, 46, 0.95)');
+    gradient.addColorStop(1, 'rgba(22, 33, 62, 0.95)');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, pipCanvas.width, pipCanvas.height);
+    
+    // 绘制边框
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(0, 0, pipCanvas.width, pipCanvas.height);
+    
+    // 计算时间
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    const timeStr = `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    
+    // 绘制时间
+    ctx.font = '48px Orbitron, SF Pro Display, sans-serif';
+    ctx.fontWeight = '700';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.shadowColor = 'rgba(0, 255, 136, 0.3)';
+    ctx.shadowBlur = 10;
+    ctx.fillText(timeStr, pipCanvas.width / 2, pipCanvas.height / 2 - 10);
+    
+    // 绘制活动
+    ctx.font = '14px SF Pro Display, sans-serif';
+    ctx.fillStyle = '#00ff88';
+    ctx.shadowBlur = 0;
+    ctx.fillText(currentActivity || '未设置活动', pipCanvas.width / 2, pipCanvas.height / 2 + 25);
+    
+    // 绘制状态
+    ctx.font = '12px SF Pro Display, sans-serif';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+    const statusText = isRunning ? 'RUNNING' : (seconds > 0 ? 'PAUSED' : 'STANDBY');
+    ctx.fillText(statusText, pipCanvas.width / 2, pipCanvas.height - 20);
+    
+    // 继续渲染
+    pipAnimationId = requestAnimationFrame(renderPiP);
+}
+
+// 切换画中画
+async function togglePiP() {
+    if (document.pictureInPictureElement) {
+        // 退出画中画
+        await document.exitPictureInPicture();
+    } else {
+        // 进入画中画
+        try {
+            // 确保canvas渲染已经开始
+            if (!pipAnimationId) {
+                renderPiP();
+            }
+            
+            // 捕获canvas流并设置到video
+            const stream = pipCanvas.captureStream(30);
+            pipVideo.srcObject = stream;
+            
+            // 等待video加载
+            await new Promise(resolve => {
+                if (pipVideo.readyState >= 2) {
+                    resolve();
+                } else {
+                    pipVideo.addEventListener('loadedmetadata', resolve);
+                }
+            });
+            
+            // 请求画中画
+            await pipVideo.requestPictureInPicture({
+                width: 300,
+                height: 200
+            });
+        } catch (error) {
+            console.error('画中画错误:', error);
+            alert('画中画功能不可用，请检查浏览器支持情况');
+        }
+    }
+}
+
+// 处理进入画中画
+function handleEnterPiP() {
+    pipBtn.textContent = '关闭悬浮窗';
+    console.log('进入画中画模式');
+}
+
+// 处理离开画中画
+function handleLeavePiP() {
+    pipBtn.textContent = '开启悬浮窗';
+    console.log('离开画中画模式');
+    
+    // 停止canvas渲染
+    if (pipAnimationId) {
+        cancelAnimationFrame(pipAnimationId);
+        pipAnimationId = null;
+    }
+    
+    // 停止视频流
+    if (pipVideo.srcObject) {
+        const stream = pipVideo.srcObject;
+        const tracks = stream.getTracks();
+        tracks.forEach(track => track.stop());
+        pipVideo.srcObject = null;
+    }
 }
 
 // 更新显示
