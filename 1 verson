@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>专注计时器</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 主计时器页面 -->
+    <div id="timer-page" class="page active">
+        <div class="container">
+            <div class="timer-card">
+                <div class="activity-input">
+                    <input type="text" id="activity-input" placeholder="输入你正在做的事情...">
+                </div>
+                <div class="timer-display">
+                    <span id="minutes">00</span>
+                    <span class="separator">:</span>
+                    <span id="seconds">00</span>
+                </div>
+                <div class="timer-controls">
+                    <button id="reset-btn" class="control-btn reset">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                            <path d="M3 3v5h5"></path>
+                        </svg>
+                    </button>
+                    <button id="play-pause-btn" class="control-btn play-pause start">
+                        <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                            <rect x="6" y="4" width="4" height="16"></rect>
+                            <rect x="14" y="4" width="4" height="16"></rect>
+                        </svg>
+                    </button>
+                    <button id="records-btn" class="control-btn records">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span id="status-text">STANDBY</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 记录页面 -->
+    <div id="records-page" class="page">
+        <div class="container">
+            <div class="records-section">
+                <div class="page-header">
+                    <h2>活动记录</h2>
+                    <button id="back-btn" class="back-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+                <div id="records-list" class="records-list">
+                    <!-- 记录将通过JavaScript动态添加 -->
+                </div>
+                <button id="clear-records" class="clear-btn">清空记录</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 浮窗元素 -->
+    <div id="floating-window" class="floating-window">
+        <div class="floating-timer">
+            <span id="floating-minutes">00</span>:
+            <span id="floating-seconds">00</span>
+        </div>
+        <div class="floating-activity" id="floating-activity">
+            未设置活动
+        </div>
+        <div class="floating-controls">
+            <button id="float-play-pause" class="float-btn play-pause">
+                <svg class="play-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <svg class="pause-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                    <rect x="6" y="4" width="4" height="16"></rect>
+                    <rect x="14" y="4" width="4" height="16"></rect>
+                </svg>
+            </button>
+        </div>
+        <div class="floating-toggle">
+            <button id="toggle-float" class="float-toggle-btn">关闭浮窗</button>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
+# 专注计时器应用
+
+一个具有科技感和液态玻璃效果的专注计时应用，支持计时、活动记录和浮窗显示功能。
+
+## 功能特点
+
+- ⏰ 精准计时器，支持分秒显示
+- 📝 活动输入，实时放大显示
+- 📋 活动记录保存
+- 🪟 浮窗显示，可在其他应用上查看计时状态
+- 🎨 液态玻璃质感界面，科技感强
+- 📱 响应式设计，适配手机屏幕
+
+## 本地运行
+
+1. 进入项目目录
+2. 启动本地服务器
+   ```bash
+   # 使用Python 3
+   python -m http.server 8000
+   
+   # 或使用Python 2
+   python -m SimpleHTTPServer 8000
+   ```
+3. 在浏览器中访问 http://localhost:8000
+
+## 部署到免费托管平台
+
+### 国外平台
+
+#### 方法1: GitHub Pages
+
+1. 在GitHub上创建一个新的仓库
+2. 将项目文件上传到仓库
+3. 在仓库设置中启用GitHub Pages，选择main分支
+4. 等待部署完成，获得访问链接
+
+#### 方法2: Vercel
+
+1. 访问 https://vercel.com
+2. 使用GitHub账号登录
+3. 点击"New Project"
+4. 选择"Import Git Repository"或直接拖放项目文件夹
+5. 按照提示完成部署
+
+#### 方法3: Netlify
+
+1. 访问 https://netlify.com
+2. 使用GitHub账号登录
+3. 点击"Add new site"
+4. 选择"Deploy manually"
+5. 拖放项目文件夹到指定区域
+6. 等待部署完成
+
+### 国内平台（推荐）
+
+#### 方法4: Gitee Pages（码云Pages）
+
+1. 访问 https://gitee.com
+2. 注册并登录账号
+3. 创建一个新的仓库
+4. 将项目文件上传到仓库
+5. 在仓库设置中找到"Pages"选项
+6. 选择分支和目录，点击"启动服务"
+7. 等待部署完成，获得国内访问速度更快的链接
+
+#### 方法5: Coding Pages
+
+1. 访问 https://coding.net
+2. 注册并登录账号
+3. 创建一个新的项目
+4. 将项目文件上传到仓库
+5. 在项目设置中找到"Pages"选项
+6. 选择分支和目录，点击"部署"
+7. 等待部署完成，获得访问链接
+
+#### 方法6: 腾讯云静态网站托管
+
+1. 访问 https://console.cloud.tencent.com/cos
+2. 注册并登录腾讯云账号
+3. 创建一个存储桶，选择"公共读"权限
+4. 上传项目文件到存储桶
+5. 在存储桶设置中找到"静态网站配置"
+6. 启用静态网站，设置index.html为默认索引页
+7. 获得访问链接
+
+#### 方法7: 阿里云静态网站托管
+
+1. 访问 https://oss.console.aliyun.com
+2. 注册并登录阿里云账号
+3. 创建一个存储桶，选择"公共读"权限
+4. 上传项目文件到存储桶
+5. 在存储桶设置中找到"静态网站托管"
+6. 启用静态网站，设置index.html为默认首页
+7. 获得访问链接
+
+## 项目结构
+
+```
+timer-app/
+├── index.html          # 主页面
+├── css/
+│   └── style.css      # 样式文件
+├── js/
+│   └── script.js      # 脚本文件
+└── README.md          # 说明文档
+```
+
+## 技术栈
+
+- HTML5
+- CSS3 (使用backdrop-filter实现液态玻璃效果)
+- JavaScript (原生)
+- 本地存储 (localStorage)
+
+## 界面特色
+
+- 液态玻璃质感：使用backdrop-filter和渐变实现
+- 实时活动显示：输入框在有文字时自动放大变色
+- 未来感数字：使用Orbitron字体和文字阴影
+- 流畅动画：页面切换和按钮交互效果
+- 响应式设计：适配不同屏幕尺寸
+
+## 使用说明
+
+1. 在顶部输入框中填写你正在做的事情
+2. 点击中央的绿色按钮开始计时（再次点击暂停）
+3. 点击右侧的记录按钮查看历史记录
+4. 浮窗功能可在其他应用中查看计时状态
+
+希望这个应用能帮助你提高专注力和工作效率！
