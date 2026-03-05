@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>专注计时器</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 主计时器页面 -->
+    <div id="timer-page" class="page active">
+        <div class="container">
+            <div class="timer-card">
+                <div class="activity-input">
+                    <input type="text" id="activity-input" placeholder="输入你正在做的事情...">
+                </div>
+                <div class="timer-display">
+                    <span id="minutes">00</span>
+                    <span class="separator">:</span>
+                    <span id="seconds">00</span>
+                </div>
+                <div class="timer-controls">
+                    <button id="reset-btn" class="control-btn reset">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                            <path d="M3 3v5h5"></path>
+                        </svg>
+                    </button>
+                    <button id="play-pause-btn" class="control-btn play-pause start">
+                        <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                            <rect x="6" y="4" width="4" height="16"></rect>
+                            <rect x="14" y="4" width="4" height="16"></rect>
+                        </svg>
+                    </button>
+                    <button id="records-btn" class="control-btn records">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span id="status-text">STANDBY</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 记录页面 -->
+    <div id="records-page" class="page">
+        <div class="container">
+            <div class="records-section">
+                <div class="page-header">
+                    <h2>活动记录</h2>
+                    <button id="back-btn" class="back-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+                <div id="records-list" class="records-list">
+                    <!-- 记录将通过JavaScript动态添加 -->
+                </div>
+                <button id="clear-records" class="clear-btn">清空记录</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 浮窗元素 -->
+    <div id="floating-window" class="floating-window">
+        <div class="floating-timer">
+            <span id="floating-minutes">00</span>:
+            <span id="floating-seconds">00</span>
+        </div>
+        <div class="floating-activity" id="floating-activity">
+            未设置活动
+        </div>
+        <div class="floating-controls">
+            <button id="float-play-pause" class="float-btn play-pause">
+                <svg class="play-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <svg class="pause-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                    <rect x="6" y="4" width="4" height="16"></rect>
+                    <rect x="14" y="4" width="4" height="16"></rect>
+                </svg>
+            </button>
+        </div>
+        <div class="floating-toggle">
+            <button id="toggle-float" class="float-toggle-btn">关闭浮窗</button>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
