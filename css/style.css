@@ -1,0 +1,607 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    min-height: 100vh;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+/* 页面样式 */
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.page.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* 液态玻璃质感 */
+.glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* 计时器卡片 */
+.timer-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 24px;
+    padding: 40px 30px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    width: 100%;
+}
+
+/* 活动输入 */
+.activity-input {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.activity-input input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    text-align: center;
+    font-weight: 500;
+}
+
+.activity-input input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.activity-input input:focus {
+    outline: none;
+    border-color: #00ff88;
+    box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+}
+
+.activity-input input:not(:placeholder-shown) {
+    color: #00ff88;
+    font-size: 18px;
+    font-weight: 600;
+    background: rgba(0, 255, 136, 0.05);
+    border-color: #00ff88;
+    padding: 16px;
+}
+
+/* 计时器显示 */
+.timer-display {
+    font-size: 100px;
+    font-weight: 700;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.timer-display span {
+    position: relative;
+    font-family: 'Orbitron', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    letter-spacing: 4px;
+}
+
+/* 液态玻璃效果增强 */
+.timer-card::before,
+.records-section::before,
+.floating-window::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.timer-card,
+.records-section,
+.floating-window {
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 8px 32px 0 rgba(0, 0, 0, 0.37),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.separator {
+    font-size: 80px;
+    opacity: 0.7;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+/* 控制按钮 */
+.timer-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.control-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.control-btn.records {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.control-btn.records:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.control-btn.play-pause {
+    width: 80px;
+    height: 80px;
+    background: #00ff88;
+    color: #000000;
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.6);
+}
+
+.control-btn.play-pause:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 35px rgba(0, 255, 136, 0.8);
+}
+
+.control-btn.play-pause.paused {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    box-shadow: none;
+}
+
+.control-btn.play-pause.paused:hover {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: none;
+}
+
+.control-btn.reset {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.control-btn.reset:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* 状态指示器 */
+.status-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00ff88;
+    animation: pulse 2s infinite;
+}
+
+#status-text {
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* 记录部分 */
+.records-section {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 24px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.page-header h2 {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.back-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.records-list {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.records-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.records-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+
+.records-list::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 136, 0.5);
+    border-radius: 2px;
+}
+
+.record-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-left: 3px solid #00ff88;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.record-time {
+    font-size: 12px;
+    color: #00ff88;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+
+.record-activity {
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.record-duration {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.clear-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.clear-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* 浮窗样式 */
+.floating-window {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-width: 200px;
+    z-index: 9999;
+    transition: all 0.3s ease;
+}
+
+.floating-window.hidden {
+    transform: translateY(150%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.floating-timer {
+    font-size: 20px;
+    font-weight: 300;
+    margin-bottom: 8px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.floating-activity {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 10px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.floating-controls {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.float-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #00ff88;
+    color: #000000;
+}
+
+.float-btn.paused {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+.floating-toggle {
+    text-align: center;
+}
+
+.float-toggle-btn {
+    padding: 4px 8px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.float-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+    .page {
+        padding: 20px 10px;
+    }
+    
+    .timer-card {
+        padding: 30px 20px;
+    }
+    
+    .timer-display {
+        font-size: 70px;
+        gap: 15px;
+    }
+    
+    .separator {
+        font-size: 50px;
+    }
+    
+    .timer-controls {
+        gap: 30px;
+    }
+    
+    .control-btn.play-pause {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .floating-window {
+        bottom: 10px;
+        right: 10px;
+        min-width: 180px;
+        padding: 12px;
+    }
+    
+    .floating-timer {
+        font-size: 18px;
+    }
+    
+    .records-section {
+        height: 85vh;
+    }
+}
+
+/* 动画效果 */
+@keyframes slideIn {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.timer-card,
+.records-section {
+    animation: slideIn 0.5s ease-out;
+}
+
+/* 按钮点击效果 */
+.control-btn:active,
+.clear-btn:active,
+.float-btn:active {
+    transform: scale(0.95);
+}
+
+/* 时间数字动画 */
+@keyframes countUp {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.05);
+    }
+}
+
+.timer-display span:not(.separator) {
+    transition: all 0.3s ease;
+}
+
+.timer-display span:not(.separator):hover {
+    animation: countUp 0.5s ease-in-out;
+}
+
+/* 页面切换动画 */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+.page.active {
+    animation: slideInRight 0.3s ease-out;
+}
+
+.page:not(.active) {
+    animation: slideOutLeft 0.3s ease-out;
+}
+
+/* 液态玻璃效果增强 */
+.timer-card::before,
+.records-section::before,
+.floating-window::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.timer-card,
+.records-section,
+.floating-window {
+    position: relative;
+    overflow: hidden;
+}
